@@ -1,13 +1,14 @@
-# 📚 2025.04.05 TIL 
+# 📚 2025.04.05 TIL
 ## 자바 ORM 표준 JPA 프로그래밍 (김영한)
 ##  ◆ 프록시와 연관관계 관리
-JPA 에서 프록시 객체는 지연 로딩을 구현하기 위한 핵심 메커니즘이다. 
+JPA 에서 프록시 객체는 지연 로딩을 구현하기 위한 핵심 메커니즘이다.
+
 ### 1. 프록시 객체란?
 - 프록시 객체는 실제 엔티티 객체를 대신하는 가짜 객체이다.
 - JPA는 엔티티를 실제로 DB에서 조회하지 않고도 일단 프록시 객체를 생성해서
-반환할 수 있고 이 프록시 객체는 필요한 시점에 실제 데이터를 DB에서 조회한다.
+  반환할 수 있고 이 프록시 객체는 필요한 시점에 실제 데이터를 DB에서 조회한다.
 
-### ✨ 예시 코드: 
+### ✨ 예시 코드:
 ```java
 @Entity
 public class Order {
@@ -21,10 +22,10 @@ public class Order {
 ### 내부 동작:
 1. order.getMember()를 호출한다.
 2. JPA는 Hibernate 프록시 객체를 Member 대신 생성해 놓는다.
-(Member$HibernateProxy 같은 클래스)
+   (Member$HibernateProxy 같은 클래스)
 3. 프록시 객체는 내부적으로 실제 Member의 ID를 가지고 있음.
-4. member.getName()처럼 필드를 접근하려는 순간, 그제서야 DB를 
-조회해서 진짜 Member 객체를 채워 넣는다(초기화).
+4. member.getName()처럼 필드를 접근하려는 순간, 그제서야 DB를
+   조회해서 진짜 Member 객체를 채워 넣는다(초기화).
 
 ### ✨ 간단한 프록시 예제:
 ```java
@@ -44,14 +45,14 @@ System.out.println("email: " + memberProxy.getEmail());
 
 ### 2. 프록시의 특징
 - 프록시 객체를 초기화 할 때, 프록시 객체가 실제 엔티티로 바뀌는 것은 아님,
-초기화 되면 프록시 객체를 통해서 실제 엔티티에 접근 가능
+  초기화 되면 프록시 객체를 통해서 실제 엔티티에 접근 가능
 - 프록시 객체는 원본 엔티티를 상속받음, 따라서 타입 체크시 주의해야함
   (== 비교시 실패, 대신 instance of 사용)
 - 영속성 컨텍스트에 찾는 엔티티가 이미 있으면 em.getReference()를
-호출해도 실제 엔티티를 반환
+  호출해도 실제 엔티티를 반환
 - 영속성 컨텍스트의 도움을 받을 수 없는 준영속 상태일 때, 프록시를 초기화하면
-문제 발생 (하이버 네이트는 org.hibernate.LazyInitializationException)
-예외를 터뜨림
+  문제 발생 (하이버 네이트는 org.hibernate.LazyInitializationException)
+  예외를 터뜨림
 
 ### 3. getReference() 호출 시 무슨 일이 벌어지나?
 ```java
@@ -63,7 +64,7 @@ Member proxy = em.getReference(Member.class, 1L);
 - Hibernate는 해당 ID에 대한 프록시 객체를 생성
 - 이 프록시 객체를 영속성 컨텍스트에 등록
 3. 이후 동일한 엔티티 ID로 find()를 호출하든, getReference()를 호출하든
-항상 같은 인스턴스(1차 캐시)를 반환한다. </br></br>
+   항상 같은 인스턴스(1차 캐시)를 반환한다. </br></br>
 
 ## ◆ 영속성 전이: CASCADE
 특정 엔티티를 영속 상태로 만들 때 연관된 엔티티도 함께 영속상태로 만들고
@@ -161,12 +162,3 @@ parent.removeChild(child);  // 관계 끊기
 ```
 ```orphanRemoval = true``` 없으면: 자식은 연관만 끊기고 DB에는 그대로 남음. </br>
 ```orphanRemoval = true``` 있으면: 연관 끊기면 자식도 자동 삭제됨.
-
-
-
-
-
-
-
-
-
