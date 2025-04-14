@@ -4,7 +4,7 @@
 JPQL은 Java Persistence Query Language의 약자로, JPA에서 사용하는 객체 지향 쿼리 언어이다.
 SQL과 문법이 비슷하지만, 테이블이 아닌 엔티티 객체를 대상으로 쿼리한다는 점에서 큰 차이가 있다.
 
-### 1. TypedQuery, Query
+## 1. TypedQuery, Query
 TypedQuery와 Query는 JPA에서 JPQL 쿼리를 실행할 때 사용하는 쿼리 실행 객체이다.
 둘 다 EntityManager를 통해 생성하지만, 가장 큰 차이는 제네릭 타입 지정 여부에 있다.
 
@@ -30,7 +30,7 @@ for (Object[] row : results) {
 - 여러 필드를 한 번에 조회하는 경우에는 ```Query```를 사용해야 한다.
 - ```Object[]```형태로 받아야 하고, 형변환 필수.
 
-### 2. query.getResultList(), query.getSingleResult()
+## 2. getResultList(), getSingleResult()
 ```query.getResultList()```와 ```query.getSingleResult()```는 
 JPQL 실행 결과를 어떻게 받아올지를 결정하는 메서드이다.
 
@@ -50,7 +50,7 @@ Member member = query.getSingleResult();
 - 결과가 없을 때 NoResultException 발생.
 - 결과가 2개 이상일 때 NonUniqueResultException 발생.
 
-### 3. 프로젝션
+## 3. 프로젝션
 프로젝션은 SELECT 절에서 어떤 데이터를 추출할지 지정하는 것을 의미한다. 
 다시 말해, 어떤 필드나 객체를 결과로 반환할지를 선택하는 것이다.
 
@@ -83,7 +83,7 @@ FROM Member m
 - DTO 클래스에 필드와 타입이 일치하는 생성자가 필요.
 - 반환 타입: ```List<MemberDTO>```
 
-### 4. JOIN
+## 4. JOIN
 JPQL에서는 조인을 할 때도 테이블 컬럼이 아니라 엔티티의 연관관계 필드를 기준으로 조인한다.
 
 ### ✨ 예시 코드:
