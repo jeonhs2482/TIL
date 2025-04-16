@@ -1,7 +1,6 @@
-# 📚 2025.04.14 TIL
+# 📚 2025.04.15 TIL
 ## 실전! 스프링 부트와 JPA 활용1 (김영한)
-##  ◆ 실전 JPA 활용
-## 1. RequiredArgsConstructor
+##  ◆ RequiredArgsConstructor
 ```@RequiredArgsConstructor```는 Lombok에서 제공하는 어노테이션으로
 주로 생성자 자동 생성을 위해 사용된다.
 
@@ -33,4 +32,8 @@ public class MemberService {
 - final 필드를 기반으로 생성자를 Lombok이 자동 생성해준다.
 - final이나 @NonNull이 붙은 필드만 파라미터로 받는 생성자 생성.
 
+### 📒 참고: 다른 Lombok 생성자 어노테이션
+- ```@NoArgsConstructor```: 파라미터 없는 생성자 생성
+- ```@AllArgsConstructor```: 모든 필드를 파라미터로 받는 생성자 생성
+- ```@RequiredArgsConstructor```: final이나 @NonNull 붙은 필드만 파라미터로 받는 생성자 생성
 
