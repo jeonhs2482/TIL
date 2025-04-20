@@ -73,11 +73,18 @@ select * from Team where id = ?;
 
 ### ✅ join
 ```jpql
-select m from Member m join m.team
+select m from Member m join m.team t
 ```
 - SQL 상으로는 내부 조인이 수행돼서 ```Member```와 ```Team```을 같이 조회하는 것처럼 보임.
 - 하지만 JPA는 여전히 ```Member```만 영속성 컨텍스트에 채워놓고, ```Team```은 프록시 객체로 유지함 (LAZY이기 때문)
 - 따라서 ```member.getTeam().getName()```을 호출하면 또 쿼리 발생
+
+### ▶ 실행되는 쿼리
+```sql
+select m.* 
+from members m
+join team t on m.team_id = t.id
+```
 
 ### ✅ join fetch
 ```jpql
@@ -86,6 +93,13 @@ select m from Member m join fetch m.team
 - SQL은 위와 동일하게 조인 수행
 - 그러나 JPA는 이 쿼리 결과를 보고 ```Member```와 ```Team```을 함께 영속성 컨텍스트에 로딩
 - ```Team```도 실제 객체로 채워지기 때문에 추가 쿼리 없음
+
+### ▶ 실행되는 쿼리
+```sql
+select m.*, t.* 
+from members m
+join team t on m.team_id = t.id
+```
 
 ## 3. 페치 조인의 한계
 - 페치 조인 대상에는 별칭을 줄 수 없다.
