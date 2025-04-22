@@ -106,6 +106,25 @@ assertThat(page.hasNext()).isTrue(); //다음 페이지가 있는가?
 - ```PageRequest```생성자의 첫 번째 파라미터에는 현재 페이지를, 두 번째 파라미터에는 조회할 데이터 수를
 입력한다. 여기에 추가로 정렬 정보도 파라미터로 사용할 수 있다. 페이지는 0부터 시작한다.
 
+## 3. 카운트 쿼리 분리
+카운트 쿼리는 DB에 있는 모든 데이터를 카운팅해야하기 때문에 데이터가 많아질수록 성능 이슈가 생길 수 있다.
+이런점을 해결하기 위해 카운트 쿼리를 분리하여 작성할 수 있도록 하는 방법이 있다.
+
+### ✅ 사용 예시:
+```java
+@Query(
+  value = "select m from Member m left join m.team t",
+  countQuery = "select count(m) from Member m"
+)
+Page<Member> findByAge(int age, Pageable pageable);
+
+```
+위 코드에서 처럼 기본적으로 ```Page<T>```를 반환할 경우, JPA는 내부적으로 count 쿼리도 
+자동으로 생성한다. 하지만 ```value```쿼리에 ```join```, ```fetch join```, ```group by``` 등 
+복잡한 로직이 있으면 자동 생성되는 count 쿼리도 복잡해져서 성능이 저하될 수 있다.
+#### ➡ 이런 경우 카운트를 구하는 쿼리에서는 team을 join할 필요가 없기 때문에 (자동으로 카운트 쿼리 발생 시 join 쿼리 발생) 분리하여 작성하면 성능이 향상된다.
+
+
 
 
 
