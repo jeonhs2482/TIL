@@ -4,7 +4,7 @@
 페치 조인은 연관된 엔티티를 SQL 조인으로 함께 조회하고, 그 결과를 엔티티에 매핑하는
 JPQL의 기능이다. N + 1 문제 해결에 자주 사용된다.
 
-## 1. N + 1 문제란?
+## ▷ N + 1 문제란?
 #### 엔티티 구조 예시:
 ```java
 @Entity
@@ -39,7 +39,7 @@ for (Member member : members) {
     System.out.println(member.getTeam().getName()); // .getName() 호출시  Team 조회
 }
 ```
-### ▶ 실행되는 쿼리 (예: Member가 3명일 때)
+### - 실행되는 쿼리 (예: Member가 3명일 때)
 ```sql
 -- 1번 실행
 select * from Member;
@@ -56,7 +56,7 @@ List<Member> members = em.createQuery("select m from Member m", Member.class)
         .getResultList();
 ```
 
-### ▶ 실행되는 쿼리 (Hibernate는 즉시 로딩 시에도 기본적으로 조인 없이 실행함)
+### - 실행되는 쿼리 (Hibernate는 즉시 로딩 시에도 기본적으로 조인 없이 실행함)
 ```sql
 -- 1번 실행
 select * from Member;
@@ -69,7 +69,7 @@ select * from Team where id = ?;
 - EAGER 로딩, LAZY 로딩 모두 N + 1 문제가 발생할 수 있음.
 - 이를 해결하기 위해 fetch join을 사용해야함.
 
-## 2. join vs join fetch의 차이
+## ▷ join vs join fetch의 차이
 
 ### ✅ join
 ```jpql
@@ -79,7 +79,7 @@ select m from Member m join m.team t
 - 하지만 JPA는 여전히 ```Member```만 영속성 컨텍스트에 채워놓고, ```Team```은 프록시 객체로 유지함 (LAZY이기 때문)
 - 따라서 ```member.getTeam().getName()```을 호출하면 또 쿼리 발생
 
-### ▶ 실행되는 쿼리
+### - 실행되는 쿼리
 ```sql
 select m.* 
 from members m
@@ -94,14 +94,14 @@ select m from Member m join fetch m.team
 - 그러나 JPA는 이 쿼리 결과를 보고 ```Member```와 ```Team```을 함께 영속성 컨텍스트에 로딩
 - ```Team```도 실제 객체로 채워지기 때문에 추가 쿼리 없음
 
-### ▶ 실행되는 쿼리
+### - 실행되는 쿼리
 ```sql
 select m.*, t.* 
 from members m
 join team t on m.team_id = t.id
 ```
 
-## 3. 페치 조인의 한계
+## ▷ 페치 조인의 한계
 - 페치 조인 대상에는 별칭을 줄 수 없다.
   - 하이버네이트는 가능하지만 가급적 사용하지 않는 것이 좋다.
 - 둘 이상의 컬렉션은 페치 조인 할 수 없다.

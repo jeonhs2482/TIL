@@ -3,7 +3,7 @@
 ##  ◆ 프록시와 연관관계 관리
 JPA 에서 프록시 객체는 지연 로딩을 구현하기 위한 핵심 메커니즘이다.
 
-### 1. 프록시 객체란?
+## ▷ 프록시 객체란?
 - 프록시 객체는 실제 엔티티 객체를 대신하는 가짜 객체이다.
 - JPA는 엔티티를 실제로 DB에서 조회하지 않고도 일단 프록시 객체를 생성해서
   반환할 수 있고 이 프록시 객체는 필요한 시점에 실제 데이터를 DB에서 조회한다.
@@ -43,7 +43,7 @@ System.out.println("email: " + memberProxy.getEmail());
 // 프록시 객체는 한 번 초기화되면 그 이후에는 다시 DB를 조회하지 않음.
 ```
 
-### 2. 프록시의 특징
+## ▷ 프록시의 특징
 - 프록시 객체를 초기화 할 때, 프록시 객체가 실제 엔티티로 바뀌는 것은 아님,
   초기화 되면 프록시 객체를 통해서 실제 엔티티에 접근 가능
 - 프록시 객체는 원본 엔티티를 상속받음, 따라서 타입 체크시 주의해야함
@@ -54,7 +54,7 @@ System.out.println("email: " + memberProxy.getEmail());
   문제 발생 (하이버 네이트는 org.hibernate.LazyInitializationException)
   예외를 터뜨림
 
-### 3. getReference() 호출 시 무슨 일이 벌어지나?
+## ▷ getReference() 호출 시 무슨 일이 벌어지나?
 ```java
 Member proxy = em.getReference(Member.class, 1L);
 ```
