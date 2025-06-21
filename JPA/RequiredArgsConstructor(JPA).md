@@ -1,4 +1,3 @@
-# 📚 2025.04.15 TIL
 ## 실전! 스프링 부트와 JPA 활용1 (김영한)
 ##  ◆ RequiredArgsConstructor
 ```@RequiredArgsConstructor```는 Lombok에서 제공하는 어노테이션으로

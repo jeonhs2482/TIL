@@ -1,4 +1,3 @@
-# 📚 2025.04.12 TIL
 ## 자바 ORM 표준 JPA 프로그래밍 (김영한)
 ##  ◆ JPQL
 JPQL은 Java Persistence Query Language의 약자로, JPA에서 사용하는 객체 지향 쿼리 언어이다.
